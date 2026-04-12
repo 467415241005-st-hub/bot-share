@@ -1,0 +1,35 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<div class="max-w-4xl mx-auto mt-10 p-6">
+    <h1 class="text-3xl font-bold mb-8">ตรวจสอบสลิปโอนเงิน (Admin Only)</h1>
+    
+    <div class="grid grid-cols-1 gap-6">
+        <% payments.forEach(p => { %>
+            <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between border-l-8 border-yellow-400">
+                <div class="flex gap-4">
+                    <img src="<%= p.slipUrl %>" class="w-24 h-32 object-cover rounded border cursor-pointer hover:scale-150 transition" onclick="window.open(this.src)">
+                    <div>
+                        <p class="font-bold text-lg">ยอดโอน: <%= p.amount %> บาท</p>
+                        <p class="text-sm text-gray-500">โดย: <%= p.user.username %></p>
+                        <p class="text-xs text-gray-400"><%= p.createdAt.toLocaleString() %></p>
+                    </div>
+                </div>
+                <button onclick="approvePayment('<%= p.id %>')" class="bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-700">✅ อนุมัติ</button>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<script>
+async function approvePayment(id) {
+    if(!confirm('ยืนยันว่ายอดเงินเข้าบัญชีเรียบร้อยแล้ว?')) return;
+    const res = await fetch('/api/admin/payments/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentId: id })
+    });
+    if(res.ok) {
+        alert('อนุมัติสำเร็จ! เครดิตถูกเพิ่มเข้าบัญชีลูกค้าแล้ว');
+        location.reload();
+    }
+}
+</script>

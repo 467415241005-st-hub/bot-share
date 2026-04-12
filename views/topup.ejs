@@ -1,0 +1,25 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<%- include('partials/navbar') %>
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">เติมเครดิต (Top-up)</h1>
+    
+    <div class="mb-6 text-center">
+        <p class="text-sm text-gray-500 mb-2">สแกนเพื่อโอนเงิน</p>
+        <img src="/uploads/slips/images/promptpay-qr.png" class="mx-auto w-64 border-4 border-blue-500 rounded-lg">
+        <p class="mt-2 font-bold text-blue-600">Mr Anusit(TMB)</p>
+    </div>
+
+    <form action="/api/payments/upload" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium">ระบุจำนวนเงิน (บาท)</label>
+            <input type="number" name="amount" required class="w-full border p-2 rounded" placeholder="เช่น 100">
+        </div>
+        <div>
+            <label class="block text-sm font-medium">แนบรูปสลิปโอนเงิน</label>
+            <input type="file" name="slip" accept="image/*" required class="w-full border p-2 rounded">
+        </div>
+        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+            📤 ส่งสลิปให้แอดมินตรวจสอบ
+        </button>
+    </form>
+</div>

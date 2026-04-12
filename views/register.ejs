@@ -1,0 +1,28 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div class="max-w-md w-full p-8 bg-white rounded-2xl shadow-xl">
+        <h1 class="text-3xl font-extrabold mb-6 text-center text-blue-600">สมัครสมาชิก</h1>
+        <p class="text-center text-gray-500 mb-8">เข้าร่วมระบบ Well Off วันนี้</p>
+        
+        <form action="/api/register" method="POST" class="space-y-5">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Username</label>
+                <input type="text" name="username" required class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="ตั้งชื่อผู้ใช้">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Email Address</label>
+                <input type="email" name="email" required class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="example@mail.com">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Password</label>
+                <input type="password" name="password" required class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 shadow-lg transform hover:-translate-y-1 transition">🚀 ยืนยันการสมัคร</button>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">มีบัญชีอยู่แล้ว? <a href="/login" class="text-blue-500 font-bold hover:underline">เข้าสู่ระบบ</a></p>
+        </div>
+    </div>
+</div>

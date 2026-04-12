@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Welloff — ระบบจองแชร์อัตโนมัติ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 font-sans antialiased text-slate-900">
+
+    <%- include('partials/navbar') %>
+
+    <header class="relative overflow-hidden bg-slate-900 pt-16 pb-32 text-white">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#4f46e5 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="text-center">
+                <span class="inline-block px-4 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-6 border border-indigo-500/30">WELLOFF PREMIUM AUTO-BOOKING</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                    ยกระดับการจองแชร์ <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">กับ Welloff System</span>
+                </h1>
+                <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+                    ระบบจองแชร์อัตโนมัติที่พัฒนาโดยนักพัฒนาผู้เชี่ยวชาญ เพื่อความเร็วสูงสุดและเสถียรที่สุดในไทย รองรับทุกแพลตฟอร์ม
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold transition shadow-lg shadow-indigo-500/20 flex items-center">
+                        <i class="fas fa-robot mr-2"></i> จัดการบอทเฟส
+                    </a>
+                    <a href="/line" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl font-bold transition shadow-lg shadow-green-500/20 flex items-center">
+                        <i class="fab fa-line mr-2 text-xl"></i> จัดการบอทไลน์
+                    </a>
+
+                    <a href="/packages" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-bold transition backdrop-blur-md border border-white/20 flex items-center">
+                        <i class="fas fa-box-open mr-2 text-indigo-400"></i> ดูแพ็คเกจทั้งหมด
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 -mt-20 relative">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 group hover:border-indigo-500 transition-all duration-300">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 text-3xl mb-6 group-hover:scale-110 transition">
+                    <i class="fab fa-facebook-messenger"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Facebook Messenger Bot</h3>
+                <ul class="space-y-3 mb-8 text-slate-500 text-sm">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> จองได้ทุกที่ ทุกเวลา ไม่จำกัด</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> ระบบจำลองพฤติกรรมมนุษย์ ปลอดภัย 100%</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> ตรวจจับข้อความหลังวางเรทอัตโนมัติ</li>
+                </ul>
+                <a href="/" class="text-indigo-600 font-bold hover:translate-x-2 transition inline-flex items-center">ไปที่ระบบเฟสบุ๊ก <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
+            </div>
+
+            <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 group hover:border-green-500 transition-all duration-300">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 text-3xl mb-6 group-hover:scale-110 transition">
+                    <i class="fab fa-line"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">LINE OA Booking</h3>
+                <ul class="space-y-3 mb-8 text-slate-500 text-sm">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> เชื่อมต่อผ่าน Messaging API โดยตรง</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> ส่งข้อความเข้ากลุ่มด้วยระบบความเร็วสูง</li>
+                    <li class="flex items-center"><i class="fas fa-times-circle text-red-500 mr-2"></i> ไม่รองรับการตรวจจับรูปภาพ (เร็วๆ นี้)</li>
+                </ul>
+                <a href="/line" class="text-green-600 font-bold hover:translate-x-2 transition inline-flex items-center">ไปที่ระบบไลน์ <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <section class="py-24 max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <p class="text-4xl font-black text-slate-900 mb-2">10M+</p>
+                <p class="text-slate-500 text-sm uppercase tracking-widest">รายการจองสำเร็จ</p>
+            </div>
+            <div>
+                <p class="text-4xl font-black text-slate-900 mb-2">99.9%</p>
+                <p class="text-slate-500 text-sm uppercase tracking-widest">Uptime เสถียรที่สุด</p>
+            </div>
+            <div>
+                <p class="text-4xl font-black text-slate-900 mb-2">24/7</p>
+                <p class="text-slate-500 text-sm uppercase tracking-widest">ซัพพอร์ตตลอดเวลา</p>
+            </div>
+            <div>
+                <p class="text-4xl font-black text-slate-900 mb-2">3+</p>
+                <p class="text-slate-500 text-sm uppercase tracking-widest">ปีที่เปิดให้บริการ</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 px-4 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:row justify-between items-center">
+            <p class="text-xs mb-4 md:mb-0">© 2026 WELLOFF — ALL RIGHTS RESERVED</p>
+            <div class="flex space-x-6 text-xs uppercase tracking-tighter">
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Contact Admin</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
