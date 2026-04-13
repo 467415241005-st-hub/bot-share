@@ -1,131 +1,107 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<body class="bg-gray-100">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<body class="bg-gray-50 pb-12">
 
     <%- include('partials/navbar') %>
 
-    <div class="max-w-6xl mx-auto py-12 px-4">
-        <h1 class="text-4xl font-extrabold text-center mb-4">รายการแพ็คเกจ</h1>
-        <p class="text-center text-gray-500 mb-12 text-xl">อัตราค่าบริการแพ็คเกจต่างๆ ที่เรามีให้บริกา</p>
+    <div class="max-w-6xl mx-auto py-10 md:py-16 px-4">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-center mb-4 text-gray-800 tracking-tight">รายการแพ็คเกจ</h1>
+        <p class="text-center text-gray-500 mb-10 md:mb-16 text-sm md:text-lg">อัตราค่าบริการแพ็คเกจสุดคุ้มสำหรับสายลุยจองแชร์</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-green-500 text-center">
-                <div class="text-green-500 mb-4"><i class="far fa-thumbs-up text-3xl"></i></div>
-                <h3 class="text-xl font-bold mb-2">แพ็คเกจเริ่มต้น</h3>
-                <p class="text-gray-500 mb-6">2 บัญชีเฟสบุ๊ค</p>
-                <div class="text-3xl font-bold text-green-600 mb-8">฿1,000 <span class="text-sm text-gray-400">/ ต่อเดือน</span></div>
-                <button onclick="buyPlan('START', 1000, 2, 1)" class="w-full border-2 border-gray-200 py-3 rounded-xl font-bold hover:bg-green-500 hover:text-white transition">เลือกแพ็คเกจนี้</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-2 sm:px-0">
+            
+            <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-[6px] border-green-500 text-center hover:-translate-y-2 transition duration-300">
+                <div class="text-green-500 mb-4 bg-green-50 w-16 h-16 mx-auto rounded-full flex items-center justify-center"><i class="far fa-thumbs-up text-2xl"></i></div>
+                <h3 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">แพ็คเกจเริ่มต้น</h3>
+                <p class="text-gray-500 mb-6 text-sm md:text-base">โควต้า: 2 บัญชี / 1 กลุ่มไลน์</p>
+                <div class="text-3xl md:text-4xl font-black text-green-600 mb-8 tracking-tighter">฿1,000 <span class="text-[10px] md:text-xs text-gray-400 font-normal tracking-normal block mt-1">/ ต่อ 30 วัน</span></div>
+                <button onclick="buyPlan('START', 1000, 2, 1)" class="w-full border-2 border-gray-100 bg-gray-50 py-3 rounded-xl font-bold text-gray-700 hover:bg-green-500 hover:border-green-500 hover:text-white transition shadow-sm">ซื้อแพ็คเกจนี้</button>
             </div>
-
+            
             </div>
     </div>
 
-    <div id="confirmModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl transform transition-all">
-        <div class="text-center">
-            <div class="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-800 mb-2">ยืนยันการซื้อแพ็คเกจ</h3>
-            <p id="confirmText" class="text-gray-500 mb-8">คุณกำลังจะซื้อแพ็คเกจ START ราคา 1000 เครดิต?</p>
-            <div class="flex space-x-3">
-                <button onclick="closeModal('confirmModal')" class="flex-1 py-3 px-4 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition">ยกเลิก</button>
-                <button id="finalConfirmBtn" class="flex-1 py-3 px-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition">ยืนยันสั่งซื้อ</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="resultModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl">
-        <div class="text-center">
-            <div id="resultIcon" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">
+    <div id="confirmModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform transition-all">
+            <div class="text-center">
+                <div class="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 text-2xl">
+                    <i class="fas fa-shopping-cart"></i>
                 </div>
-            <h3 id="resultTitle" class="text-2xl font-bold text-gray-800 mb-2">ข้อความหัวข้อ</h3>
-            <p id="resultText" class="text-gray-500 mb-8">ข้อความรายละเอียด...</p>
-            <button onclick="closeModal('resultModal')" id="resultBtn" class="w-full py-3 px-4 text-white font-bold rounded-xl transition">ตกลง</button>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">ยืนยันการสั่งซื้อ</h3>
+                <p id="confirmText" class="text-gray-500 mb-8 text-sm md:text-base leading-relaxed">คุณกำลังจะซื้อแพ็คเกจ START ราคา 1000 เครดิต?</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                    <button onclick="closeModal('confirmModal')" class="w-full sm:w-1/2 py-3 px-4 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition">ยกเลิก</button>
+                    <button id="finalConfirmBtn" class="w-full sm:w-1/2 py-3 px-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition">ยืนยันหักเครดิต</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div id="resultModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl">
+            <div class="text-center">
+                <div id="resultIcon" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">
+                </div>
+                <h3 id="resultTitle" class="text-xl md:text-2xl font-bold text-gray-800 mb-2">ข้อความหัวข้อ</h3>
+                <p id="resultText" class="text-gray-500 mb-8 text-sm md:text-base leading-relaxed">ข้อความรายละเอียด...</p>
+                <button onclick="closeModal('resultModal')" id="resultBtn" class="w-full py-3 px-4 text-white font-bold rounded-xl shadow-lg transition">ตกลง</button>
+            </div>
+        </div>
+    </div>
 
     <script>
     let currentPlanData = null;
-
-// ฟังก์ชันเปิด Modal ยืนยัน
-function buyPlan(name, price, fb, line) {
-    currentPlanData = { name, price, fb, line };
-    document.getElementById('confirmText').innerText = `คุณต้องการซื้อแพ็คเกจ ${name} ราคา ${price.toLocaleString()} เครดิต ใช่หรือไม่?`;
-    document.getElementById('confirmModal').classList.remove('hidden');
-    
-    // ตั้งค่าปุ่มยืนยันสุดท้าย
-    document.getElementById('finalConfirmBtn').onclick = executePurchase;
-}
-
-// ฟังก์ชันส่งคำสั่งซื้อไปยัง API
-async function executePurchase() {
-    closeModal('confirmModal');
-    
-    const { name, price, fb, line } = currentPlanData;
-    
-    try {
-        const res = await fetch('/api/packages/buy', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ planName: name, price: price, fbLimit: fb, lineLimit: line })
-        });
-        const data = await res.json();
-        
-        if(data.success) {
-            showResult(true, "ซื้อแพ็คเกจสำเร็จ", `ตอนนี้คุณสามารถใช้งานบอทได้ตามโควต้าใหม่แล้วครับ`);
-        } else {
-            showResult(false, "ซื้อแพ็คเกจไม่สำเร็จ", data.error || "เกิดข้อผิดพลาดบางอย่าง");
-        }
-    } catch (err) {
-        showResult(false, "เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+    function buyPlan(name, price, fb, line) {
+        currentPlanData = { name, price, fb, line };
+        document.getElementById('confirmText').innerHTML = `ซื้อแพ็คเกจ <span class="font-bold text-blue-600">${name}</span><br>ราคา <span class="font-bold text-red-500">${price.toLocaleString()}</span> เครดิต ใช่หรือไม่?`;
+        document.getElementById('confirmModal').classList.remove('hidden');
+        document.getElementById('finalConfirmBtn').onclick = executePurchase;
     }
-}
 
-// ฟังก์ชันแสดง Modal ผลลัพธ์
-function showResult(isSuccess, title, message) {
-    const icon = document.getElementById('resultIcon');
-    const btn = document.getElementById('resultBtn');
-    
-    if(isSuccess) {
-    // กรณีสำเร็จ: เปลี่ยนวงกลมเป็นสีเขียว และใส่เครื่องหมายถูก (Checkmark)
-    icon.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-100 text-green-600";
-    
-    // ใช้ SVG รูปเครื่องหมายถูก เพื่อความคมชัด 100%
-    icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-    `;
+    async function executePurchase() {
+        closeModal('confirmModal');
+        const { name, price, fb, line } = currentPlanData;
+        try {
+            const res = await fetch('/api/packages/buy', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ planName: name, price: price, fbLimit: fb, lineLimit: line })
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                showResult(true, "สั่งซื้อสำเร็จ!", `ระบบได้อัปเดตโควต้าบอทให้คุณเรียบร้อยแล้ว`);
+            } else {
+                showResult(false, "ทำรายการไม่สำเร็จ", data.error || "เกิดข้อผิดพลาด หรือเครดิตไม่พอ");
+            }
+        } catch (err) {
+            showResult(false, "ข้อผิดพลาด", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
+        }
+    }
 
-    btn.className = "w-full py-3 px-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-200";
-    
-    // เมื่อกดตกลง ให้กลับไปหน้าหลักเพื่อดูยอดเครดิตที่ลดลงและโควต้าที่เพิ่มขึ้น
-    btn.onclick = () => location.href = '/';
-} else {
-    // กรณีไม่สำเร็จ: เปลี่ยนวงกลมเป็นสีแดง และใส่เครื่องหมาย X
-    icon.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-100 text-red-600";
-    
-    // ใช้ SVG รูปกากบาท (X) เพื่อความชัวร์ 100%
-    icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-    `;
+    function showResult(isSuccess, title, message) {
+        const icon = document.getElementById('resultIcon');
+        const btn = document.getElementById('resultBtn');
+        if(isSuccess) {
+            icon.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 bg-green-100 text-green-600";
+            icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
+            btn.className = "w-full py-3 px-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-200";
+            btn.onclick = () => location.href = '/';
+        } else {
+            icon.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 bg-red-100 text-red-600";
+            icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`;
+            btn.className = "w-full py-3 px-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-200";
+            btn.onclick = () => closeModal('resultModal');
+        }
+        
+        document.getElementById('resultTitle').innerText = title;
+        document.getElementById('resultText').innerHTML = message;
+        document.getElementById('resultModal').classList.remove('hidden');
+    }
 
-    btn.className = "w-full py-3 px-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-200";
-    btn.onclick = () => closeModal('resultModal');
-}
-    
-    document.getElementById('resultTitle').innerText = title;
-    document.getElementById('resultText').innerText = message;
-    document.getElementById('resultModal').classList.remove('hidden');
-}
-
-function closeModal(id) {
-    document.getElementById(id).classList.add('hidden');
-}
+    function closeModal(id) {
+        document.getElementById(id).classList.add('hidden');
+    }
     </script>
 </body>

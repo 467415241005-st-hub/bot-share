@@ -1,11 +1,12 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <body class="bg-gray-50">
     <%- include('partials/navbar') %>
-    <div class="max-w-4xl mx-auto mt-10 px-4">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h1 class="text-2xl font-bold text-gray-800 mb-6">📋 ประวัติการเติมเครดิต</h1>
+    <div class="max-w-4xl mx-auto mt-6 md:mt-10 px-4 mb-10">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800 mb-6">📋 ประวัติการเติมเครดิต</h1>
             
             <div class="space-y-4">
                 <% if (payments.length === 0) { %>
@@ -13,21 +14,21 @@
                 <% } %>
 
                 <% payments.forEach(p => { %>
-                    <div class="flex items-center justify-between p-4 border rounded-xl hover:bg-gray-50 transition">
+                    <div class="flex flex-row items-center justify-between p-4 border rounded-xl hover:bg-gray-50 transition">
                         <div>
-                            <p class="font-bold text-blue-600 text-lg">฿<%= p.amount.toLocaleString() %></p>
-                            <p class="text-xs text-gray-400"><%= p.createdAt.toLocaleString('th-TH') %></p>
+                            <p class="font-bold text-blue-600 text-base md:text-lg">฿<%= p.amount.toLocaleString() %></p>
+                            <p class="text-[10px] md:text-xs text-gray-400"><%= p.createdAt.toLocaleString('th-TH') %></p>
                         </div>
                         
                         <div class="text-right">
                             <% if (p.status === 'PENDING') { %>
-                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">⏳ รอตรวจสอบ</span>
+                                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold">⏳ รอตรวจสอบ</span>
                             <% } else if (p.status === 'APPROVED') { %>
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">✅ สำเร็จ</span>
+                                <span class="bg-green-100 text-green-700 px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold">✅ สำเร็จ</span>
                             <% } else { %>
-                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">❌ ไม่ผ่าน</span>
+                                <span class="bg-red-100 text-red-700 px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold">❌ ไม่ผ่าน</span>
                             <% } %>
-                            <a href="<%= p.slipUrl %>" target="_blank" class="block text-[10px] text-blue-400 mt-1 underline">ดูสลิปที่ส่ง</a>
+                            <a href="<%= p.slipUrl %>" target="_blank" class="block text-[10px] md:text-xs text-blue-400 mt-2 underline">ดูสลิปที่ส่ง</a>
                         </div>
                     </div>
                 <% }) %>

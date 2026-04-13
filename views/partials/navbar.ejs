@@ -1,10 +1,11 @@
 <nav class="bg-slate-900 text-white shadow-xl mb-0 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4">
+    <div class="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-8">
-                <span class="text-2xl font-black tracking-tighter text-indigo-400">WELL<span class="text-white">OFF</span></span>
+            
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <span class="text-xl md:text-2xl font-black tracking-tighter text-indigo-400">WELL<span class="text-white">OFF</span></span>
                 
-                <div class="hidden md:flex space-x-6 items-center text-sm">
+                <div class="hidden md:flex space-x-4 lg:space-x-6 items-center text-sm">
                     <a href="/home" class="hover:text-indigo-400 transition <%= (locals.page && page === 'home') ? 'text-indigo-400 font-bold' : '' %>">หน้าแรก</a>
                     <a href="/" class="hover:text-indigo-400 transition">จัดการบอทเฟส</a>
                     <a href="/line" class="hover:text-indigo-400 transition">จัดการบอทไลน์</a>
@@ -17,31 +18,31 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <div class="text-right mr-2">
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">เครดิต</p>
-                    <p class="text-sm font-bold text-indigo-300">฿<%= user?.credits ? user.credits.toLocaleString() : '0' %></p>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <div class="text-right mr-1 md:mr-2">
+                    <p class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-widest">เครดิต</p>
+                    <p class="text-xs md:text-sm font-bold text-indigo-300">฿<%= typeof user !== 'undefined' && user?.credits ? user.credits.toLocaleString() : '0' %></p>
                 </div>
                 
-                <a href="/logout" class="hidden sm:block bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition border border-red-500/20">ออกจากระบบ</a>
+                <a href="/logout" class="hidden sm:block bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs font-bold transition border border-red-500/20">ออกจากระบบ</a>
                 
-                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-indigo-300 focus:outline-none transition p-1">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-3 border-t border-slate-800 pt-4 text-sm">
-            <a href="/home" class="block hover:text-indigo-400 transition">หน้าแรก</a>
-            <a href="/" class="block hover:text-indigo-400 transition">จัดการบอทเฟส</a>
-            <a href="/line" class="block hover:text-indigo-400 transition">จัดการบอทไลน์</a>
-            <a href="/add-bot" class="block text-green-400 hover:text-green-300 transition">
-                <i class="fab fa-line mr-1"></i> เพิ่มเพื่อนบอท
+        <div id="mobile-menu" class="hidden md:hidden mt-3 pb-2 space-y-2 border-t border-slate-800 pt-3 text-sm">
+            <a href="/home" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">หน้าแรก</a>
+            <a href="/" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">จัดการบอทเฟส</a>
+            <a href="/line" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">จัดการบอทไลน์</a>
+            <a href="/add-bot" class="block py-2.5 px-3 rounded-lg bg-green-900/30 text-green-400 hover:bg-green-900/50 transition border border-green-900/50">
+                <i class="fab fa-line mr-2"></i> เพิ่มเพื่อนบอท
             </a>
-            <a href="/packages" class="block hover:text-indigo-400 transition">แพ็คเกจ</a>
-            <a href="/history" class="block hover:text-indigo-400 transition">ประวัติ</a>
-            <a href="/guide" class="block hover:text-indigo-400 transition">วิธีใช้งาน</a>
-            <a href="/logout" class="block sm:hidden text-red-400 pt-2 border-t border-slate-800">ออกจากระบบ</a>
+            <a href="/packages" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">แพ็คเกจ</a>
+            <a href="/history" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">ประวัติ</a>
+            <a href="/guide" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">วิธีใช้งาน</a>
+            <a href="/logout" class="block sm:hidden py-2.5 px-3 mt-3 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition border border-red-500/20 text-center font-bold">ออกจากระบบ</a>
         </div>
     </div>
 </nav>
