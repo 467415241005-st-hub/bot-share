@@ -51,7 +51,7 @@ const isLogin = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-    if (req.session.userId && req.session.role === 'ADMIN') return next();
+    if (req.session.userId && req.session.role === 'admin') return next(); // ✨ แก้ ADMIN เป็น admin
     res.status(403).send("เฉพาะแอดมินเท่านั้น!");
 };
 
@@ -150,8 +150,18 @@ app.post('/api/login', async (req, res) => {
     const user = await prisma.user.findUnique({ where: { username } });
 
     if (user && await bcrypt.compare(password, user.password)) {
+        // 1. เซฟค่าแยกไว้ใช้กับ Middleware (คุณแทนเขียนถูกแล้วครับ)
         req.session.userId = user.id;
         req.session.role = user.role;
+
+        // 2. ⭐ เพิ่มส่วนนี้! แพ็คข้อมูลใส่กล่อง user เพื่อส่งไปให้ไฟล์หน้าเว็บ (EJS) ใช้งาน
+        req.session.user = {
+            id: user.id,
+            username: user.username,
+            role: user.role, // ตัวแปรนี้แหละที่ navbar จะเอาไปใช้โชว์เมนูแอดมิน
+            credits: user.credits || 0 // เอาไว้โชว์ยอดเงินมุมขวาบน
+        };
+
         res.redirect('/home');
     } else {
         res.status(401).send("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
@@ -504,10 +514,18 @@ app.post('/api/jobs/send-now', isLogin, async (req, res) => {
     }
 });
 
-app.get('/add-bot', isLogin, (req, res) => {
-    res.render('add_bot', {
-        user: req.user // ส่งข้อมูล user ไปเผื่อใช้ใน navbar
-    });
+// ลบอันเดิมออก แล้วใส่อันนี้แทนครับ (ดึงข้อมูล user จากฐานข้อมูลเหมือนหน้าอื่นๆ)
+app.get('/add-bot', isLogin, async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({ where: { id: req.session.userId } });
+        res.render('add_bot', {
+            user: user, 
+            role: req.session.role,
+            page: 'add-bot' 
+        });
+    } catch (error) {
+        res.status(500).send("Error loading add-bot page");
+    }
 });
 
 app.listen(PORT, () => {

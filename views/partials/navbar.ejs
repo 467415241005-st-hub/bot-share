@@ -17,6 +17,12 @@
                     <a href="/packages" class="hover:text-indigo-400 transition">แพ็คเกจ</a>
                     <a href="/history" class="hover:text-indigo-400 transition">ประวัติ</a>
                     <a href="/guide" class="hover:text-indigo-400 transition <%= (locals.page && page === 'guide') ? 'text-indigo-400 font-bold' : '' %>">วิธีใช้งาน</a>
+
+<% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
+    <a href="/admin/payments" class="text-yellow-400 hover:text-yellow-300 font-bold flex items-center transition">
+        <i class="fas fa-user-shield mr-1"></i> ตรวจสลิป
+    </a>
+<% } %>
                 </div>
             </div>
 
@@ -44,6 +50,12 @@
             <a href="/packages" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">แพ็คเกจ</a>
             <a href="/history" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">ประวัติ</a>
             <a href="/guide" class="block py-2.5 px-3 rounded-lg hover:bg-slate-800 hover:text-indigo-400 transition">วิธีใช้งาน</a>
+
+<% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
+    <a href="/admin/payments" class="block py-2.5 px-3 rounded-lg bg-yellow-900/30 text-yellow-400 hover:bg-yellow-900/50 transition border border-yellow-900/50 font-bold">
+        <i class="fas fa-user-shield mr-2"></i> ตรวจสลิป (Admin)
+    </a>
+<% } %>
             <a href="/logout" class="block sm:hidden py-2.5 px-3 mt-3 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition border border-red-500/20 text-center font-bold">ออกจากระบบ</a>
         </div>
     </div>
