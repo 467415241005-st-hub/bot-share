@@ -240,7 +240,13 @@ app.get('/admin/payments', isAdmin, async (req, res) => {
         where: { status: 'PENDING' },
         include: { user: true }
     });
-    res.render('admin_payments', { payments: pendingPayments });
+    
+    res.render('admin_payments', { 
+        payments: pendingPayments,
+        user: req.session.user,     // ⭐ ต้องส่ง user ไปให้ navbar ด้วย
+        role: req.session.role,     // ⭐ ส่ง role ไปยืนยัน
+        page: 'admin_payments' 
+    });
 });
 
 app.post('/api/admin/payments/approve', isAdmin, async (req, res) => {
