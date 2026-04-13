@@ -10,7 +10,11 @@ const path = require('path');
 const axios = require('axios');
 
 const app = express();
-const prisma = new PrismaClient();
+// ป้องกันไม่ให้ Prisma สร้าง Connection ใหม่ซ้ำซ้อนบน Serverless
+const prisma = global.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== 'production') {
+    global.prisma = prisma;
+}
 const PORT = process.env.PORT || 3000;
 
 // ---------------------------------------------------
@@ -283,7 +287,7 @@ async function seedUser() {
         console.log("✅ Default Admin Created (User: admin / Pass: password123)");
     }
 }
-seedUser();
+//seedUser();
 
 app.post('/api/packages/buy', isLogin, async (req, res) => {
     const { planName, price, fbLimit, lineLimit } = req.body;
