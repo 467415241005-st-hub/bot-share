@@ -101,7 +101,41 @@ app.post('/api/register', async (req, res) => {
         await prisma.user.create({
             data: { username, email, password: hashedPassword }
         });
-        res.send("<script>alert('สมัครสมาชิกสำเร็จ!'); window.location='/login';</script>");
+        res.send(`
+  <!DOCTYPE html>
+  <html lang="th">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>สมัครสมาชิกสำเร็จ</title>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <style>
+          /* ตั้งค่าพื้นหลังให้ดูเนียนตา (เปลี่ยนสีตามธีมเว็บได้) */
+          body { background-color: #f3f4f6; font-family: 'Kanit', sans-serif; }
+      </style>
+  </head>
+  <body>
+      <script>
+          // เรียกใช้งาน SweetAlert2 ทันทีที่หน้าเว็บโหลดเสร็จ
+          document.addEventListener("DOMContentLoaded", function() {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'สมัครสมาชิกสำเร็จ!',
+                  text: 'ยินดีต้อนรับเข้าสู่ระบบ WELLOFF',
+                  confirmButtonText: 'ไปหน้าเข้าสู่ระบบ',
+                  confirmButtonColor: '#3085d6',
+                  allowOutsideClick: false // บังคับให้ต้องกดปุ่มเท่านั้น
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      // เมื่อกดปุ่ม OK ให้เด้งไปหน้า Login
+                      window.location.href = '/login'; // ⚠️ อย่าลืมแก้ตรงนี้ให้ตรงกับ URL หน้าล็อกอินของคุณแทนนะครับ
+                  }
+              });
+          });
+      </script>
+  </body>
+  </html>
+`);
     } catch (err) {
         res.status(400).send("Username หรือ Email นี้ถูกใช้ไปแล้ว");
     }
