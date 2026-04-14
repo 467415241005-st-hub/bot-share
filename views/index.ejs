@@ -94,5 +94,90 @@
 
         </div>
     </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <% accounts.forEach(acc => { %>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
+            <div>
+                <p class="font-bold text-gray-800"><i class="fab fa-facebook text-blue-600 mr-2"></i> <%= acc.fbEmail %></p>
+                <p class="text-xs text-gray-400">ID: <%= acc.id %></p>
+            </div>
+            <button onclick="deleteAccount('<%= acc.id %>')" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    <% }) %>
+</div>
+
+<div class="flex gap-2">
+    <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-xl font-bold">ตั้งเวลาจอง</button>
+    <button type="button" onclick="sendNow()" class="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold">🚀 ส่งทันที</button>
+</div>
+
+<div class="mt-10">
+    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <i class="fas fa-history text-blue-600"></i> สถานะการทำงานล่าสุด
+    </h3>
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-bold">
+                <tr>
+                    <th class="p-4">เวลา</th>
+                    <th class="p-4">บัญชี</th>
+                    <th class="p-4">ข้อความ</th>
+                    <th class="p-4">สถานะ</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm">
+                <% jobs.forEach(job => { %>
+                    <tr class="border-t border-gray-50 hover:bg-gray-50 transition">
+                        <td class="p-4 text-gray-400"><%= job.runAt.toLocaleString('th-TH') %></td>
+                        <td class="p-4 font-medium"><%= job.account.fbEmail %></td>
+                        <td class="p-4 text-gray-600 truncate max-w-[150px]"><%= job.message %></td>
+                        <td class="p-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold 
+                                <%= job.status === 'SUCCESS' ? 'bg-green-100 text-green-600' : 
+                                    job.status === 'FAILED' ? 'bg-red-100 text-red-600' : 
+                                    'bg-yellow-100 text-yellow-600' %>">
+                                <%= job.status %>
+                            </span>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+// ฟังก์ชันลบบัญชี
+async function deleteAccount(id) {
+    if(!confirm('ยืนยันการลบบัญชีเฟซบุ๊กนี้?')) return;
+    const res = await fetch('/api/accounts/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accountId: id })
+    });
+    if(res.ok) location.reload();
+}
+
+// ฟังก์ชันส่งทันที
+async function sendNow() {
+    const accountId = document.querySelector('select[name="accountId"]').value;
+    const targetUrl = document.querySelector('input[name="targetUrl"]').value;
+    const message = document.querySelector('textarea[name="message"]').value;
+
+    if(!targetUrl || !message) return alert('กรุณากรอกข้อมูลให้ครบ');
+
+    const res = await fetch('/api/facebook/send-now', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accountId, targetUrl, message })
+    });
+    if(res.ok) {
+        alert('สั่งงานสำเร็จ!');
+        location.reload();
+    }
+}
+</script>
 </body>
 </html>

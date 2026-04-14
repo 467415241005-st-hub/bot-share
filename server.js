@@ -82,12 +82,26 @@ const upload = multer({ storage: storage });
 // 4. ROUTES & API
 // ---------------------------------------------------
 
-// หน้า Dashboard หลัก
+// --- อัปเดต Route หน้าแรกเพื่อให้ดึงข้อมูลสถานะงานมาโชว์ในตาราง ---
 app.get('/', isLogin, async (req, res) => {
     try {
         const user = await prisma.user.findUnique({ where: { id: req.session.userId } });
         const accounts = await prisma.botAccount.findMany({ where: { userId: req.session.userId } });
-        res.render('index', { user, accounts, page: 'facebook' });
+        
+        // ดึงประวัติงาน 10 รายการล่าสุดมาโชว์ที่ตาราง
+        const jobs = await prisma.jobQueue.findMany({
+            where: { account: { userId: req.session.userId } },
+            orderBy: { createdAt: 'desc' },
+            take: 10,
+            include: { account: true }
+        });
+
+        res.render('index', { 
+            user, 
+            accounts, 
+            jobs, // ส่งตัวแปร jobs ไปที่หน้า index.ejs
+            page: 'facebook' 
+        });
     } catch (error) {
         res.status(500).send("Error loading dashboard");
     }
@@ -162,6 +176,54 @@ app.get('/home', isLogin, async (req, res) => {
 app.get('/add-bot', isLogin, async (req, res) => {
     const user = await prisma.user.findUnique({ where: { id: req.session.userId } });
     res.render('add_bot', { user, page: 'add-bot' });
+});
+
+// --- API สำหรับลบบัญชีเฟซบุ๊ก ---
+app.post('/api/accounts/delete', isLogin, async (req, res) => {
+    const { accountId } = req.body;
+    try {
+        await prisma.botAccount.delete({
+            where: { 
+                id: parseInt(accountId),
+                userId: req.session.userId // เช็กเพื่อความปลอดภัยว่าต้องเป็นเจ้าของบัญชี
+            }
+        });
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: "ไม่สามารถลบบัญชีได้" });
+    }
+});
+
+// --- API สำหรับส่งคอมเมนต์เฟซบุ๊กทันที ---
+app.post('/api/facebook/send-now', isLogin, async (req, res) => {
+    const { accountId, targetUrl, message } = req.body;
+    try {
+        // 1. สร้าง Job ในฐานข้อมูลเป็นสถานะ RUNNING ทันที
+        const job = await prisma.jobQueue.create({
+            data: {
+                accountId: parseInt(accountId),
+                targetUrl: targetUrl,
+                message: message,
+                runAt: new Date(),
+                status: "RUNNING"
+            },
+            include: { account: true }
+        });
+
+        // 2. สั่งรันบอททันทีโดยไม่รอ Cron
+        const success = await runCommentBot(job);
+
+        // 3. อัปเดตสถานะหลังรันเสร็จ
+        await prisma.jobQueue.update({
+            where: { id: job.id },
+            data: { status: success ? "SUCCESS" : "FAILED" }
+        });
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: "เกิดข้อผิดพลาดในการส่งทันที" });
+    }
 });
 
 // ... (Route อื่นๆ ของคุณแทนคงไว้ตามเดิมได้เลยครับ) ...
